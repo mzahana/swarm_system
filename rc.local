@@ -1,0 +1,52 @@
+#!/bin/bash -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+mount /dev/mmcblk2p1 /media/sdcard
+
+rm -rf /root/.ros/log
+
+echo 298 >> /sys/class/gpio/export
+echo out >> /sys/class/gpio/gpio298/direction
+echo 0 >> /sys/class/gpio/gpio298/value
+
+
+cd /home/nvidia
+source /opt/ros/melodic/setup.bash
+source /home/nvidia/catkin_ws/devel/setup.bash
+
+#ntpdate host01 &
+
+export ROS_NAMESPACE=drone31
+
+sleep 2
+roscore &
+sleep 5
+#roslaunch swarm_mapping realsense_cameras.launch tf_namespace:=$ROS_NAMESPACE &
+roslaunch uav_commander commander.launch ns:=$ROS_NAMESPACE &
+rosrun tf static_transform_publisher -0.114 0.005 0.035 0 -0.314159 0 /drone31/cam_odom_corr /drone31/cam_odom_odom_frame 10 &
+rosrun tf static_transform_publisher 0 0 0 -1.57 0 0 drone31/cam_odom_odom_frame drone31/cam_odom_mavros_temp_frame 10 &
+rosrun tf static_transform_publisher 0 0 0 1.57 0 0 drone31/cam_odom_mavros_temp_frame drone31/cam_odom_mavros_frame 10 &
+#rosrun tf static_transform_publisher 0 0 0 -1.57 0 0 drone31/cam_odom_odom_frame drone31/cam_odom_mavros_frame 10 &
+roslaunch swarm_utils px4.launch &
+rosrun swarm_controllers loggerAll.py &
+#rosrun swarm_mapping map_tf.py &
+rosrun swarm_mapping service_server.py &
+roslaunch swarm_utils multiMaster.launch &
+#roslaunch swarm_mapping realsense_cameras.launch tf_namespace:=$ROS_NAMESPACE &
+roslaunch swarm_mapping robot_localization_ekf.launch &
+rosrun swarm_controllers led_controller.py &
+export ROS_NAMESPACE=
+roslaunch swarm_mapping realsense_cameras.launch &
+export ROS_NAMESPACE=drone31
+exit 0
+
