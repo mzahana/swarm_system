@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="ns" default=""/>
+    <include file="$(find uav_commander)/launch/commander.launch">
+        <arg name="ns" value="$(arg ns)"/>
+    </include>
+
+</launch>>
