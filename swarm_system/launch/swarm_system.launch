@@ -1,0 +1,18 @@
+<launch>
+
+    <arg name="ns"          default=""/>
+
+    <include file="$(find commander)/launch/sensors.launch">
+        <arg name="tf_namespace"            value="$(arg ns)"/>
+    </include>
+
+    <include file="$(find localization)/launch/localization.launch">
+        <arg name="tf_namespace"            value="$(arg ns)"/>
+    </include>
+
+    <include file="$(find mapping)/launch/mapping.launch">
+        <arg name="tf_namespace"            value="$(arg ns)"/>
+    </include>
+
+    
+</launch>

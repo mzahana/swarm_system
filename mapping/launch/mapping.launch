@@ -1,0 +1,8 @@
+<launch>
+
+    <arg name="ns"          default=""/>
+
+    <node pkg="swarm_mapping" type="map_tf.py" name="map_intermediate_tf"/>
+    <node pkg="swarm_mapping" type="service_server.py" name="service_server"/>
+    <node pkg="swarm_controller" type="logger_all.py" name="logger"/>
+</launch>
