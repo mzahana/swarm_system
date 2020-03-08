@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="thermal_cam_node" pkg="usb_cam" type="usb_cam_node">
+        <param name="video_device"    value="/dev/v4l/by-id/usb-GroupGets_PureThermal__fw:v1.2.2__8003001e-510a-3138-3533-373900000000-video-index0"/>
+        <param name="image_width"     value="160"/>
+        <param name="image_height"    value="120"/>
+        <param name="pixel_format"    value="uyvy"/>
+    </node>
+</launch>
