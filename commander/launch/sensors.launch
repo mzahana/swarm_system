@@ -9,4 +9,7 @@
     <include file="$(find swarm_utils)/launch/px4.launch">
     </include>
 
+   <include file="$(find hardware)/launch/thermal_camera.launch">
+   </include>
+
 </launch>
