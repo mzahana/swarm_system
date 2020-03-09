@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="ns" default=""/>
+    <arg name="drone_namespce" default=""/>
     <include file="$(find uav_commander)/launch/commander.launch">
-        <arg name="ns" value="$(arg ns)"/>
+        <arg name="ns" value="$(arg drone_namespce)"/>
     </include>
 
 </launch>>

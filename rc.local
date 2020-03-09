@@ -11,13 +11,14 @@
 #
 # By default this script does nothing.
 
-mount /dev/mmcblk2p1 /media/sdcard
+#mount /dev/mmcblk2p1 /media/sdcard
 
 rm -rf /root/.ros/log
 
-echo 298 >> /sys/class/gpio/export
-echo out >> /sys/class/gpio/gpio298/direction
-echo 0 >> /sys/class/gpio/gpio298/value
+export LED_GPIO=298
+echo $LED_GPIO >> /sys/class/gpio/export
+echo out >> /sys/class/gpio/gpio$LED_GPIO/direction
+echo 0 >> /sys/class/gpio/gpio$LED_GPIO/value
 
 
 cd /home/nvidia
@@ -26,27 +27,40 @@ source /home/nvidia/catkin_ws/devel/setup.bash
 
 #ntpdate host01 &
 
-export ROS_NAMESPACE=drone31
+export DRONE_ID=drone31
+export RS_FRONT_ID=841512071784
+export RS_RIGHT_ID=923322070266
+export RS_LEFT_ID=841612070675
+export RS_ODOM_ID=929122110989
+export THERMAL_CAM=/dev/v4l/by-id/usb-GroupGets_PureThermal__fw:v1.2.2__8003001e-510a-3138-3533-373900000000-video-index0
 
 sleep 2
 roscore &
 sleep 5
 #roslaunch swarm_mapping realsense_cameras.launch tf_namespace:=$ROS_NAMESPACE &
-roslaunch uav_commander commander.launch ns:=$ROS_NAMESPACE &
-rosrun tf static_transform_publisher -0.114 0.005 0.035 0 -0.314159 0 /drone31/cam_odom_corr /drone31/cam_odom_odom_frame 10 &
-rosrun tf static_transform_publisher 0 0 0 -1.57 0 0 drone31/cam_odom_odom_frame drone31/cam_odom_mavros_temp_frame 10 &
-rosrun tf static_transform_publisher 0 0 0 1.57 0 0 drone31/cam_odom_mavros_temp_frame drone31/cam_odom_mavros_frame 10 &
+#!!!!roslaunch uav_commander commander.launch ns:=$ROS_NAMESPACE &
+#!!!!rosrun tf static_transform_publisher -0.114 0.005 0.035 0 -0.314159 0 /drone31/cam_odom_corr /drone31/cam_odom_odom_frame 10 &
+#!!!!rosrun tf static_transform_publisher 0 0 0 -1.57 0 0 drone31/cam_odom_odom_frame drone31/cam_odom_mavros_temp_frame 10 &
+#!!!!rosrun tf static_transform_publisher 0 0 0 1.57 0 0 drone31/cam_odom_mavros_temp_frame drone31/cam_odom_mavros_frame 10 &
 #rosrun tf static_transform_publisher 0 0 0 -1.57 0 0 drone31/cam_odom_odom_frame drone31/cam_odom_mavros_frame 10 &
-roslaunch swarm_utils px4.launch &
-rosrun swarm_controllers loggerAll.py &
+#!!!!roslaunch swarm_utils px4.launch &
+#!!!!rosrun swarm_controllers loggerAll.py &
 #rosrun swarm_mapping map_tf.py &
-rosrun swarm_mapping service_server.py &
-roslaunch swarm_utils multiMaster.launch &
-#roslaunch swarm_mapping realsense_cameras.launch tf_namespace:=$ROS_NAMESPACE &
-roslaunch swarm_mapping robot_localization_ekf.launch &
-rosrun swarm_controllers led_controller.py &
-export ROS_NAMESPACE=
-roslaunch swarm_mapping realsense_cameras.launch &
-export ROS_NAMESPACE=drone31
+#!!!!rosrun swarm_mapping service_server.py &
+#!!!!roslaunch swarm_utils multiMaster.launch &
+#!!!!roslaunch swarm_mapping realsense_cameras.launch tf_namespace:=$ROS_NAMESPACE &
+#!!!!roslaunch swarm_mapping robot_localization_ekf.launch &
+#rosrun swarm_controllers led_controller.py &
+# export ROS_NAMESPACE=
+#!!!!roslaunch swarm_mapping realsense_cameras.launch &
+# export ROS_NAMESPACE=drone31
+
+roslaunch commander utils.launch drone_namespace:=$DRONE_ID
+roslaunch hardware sensors.launch drone_namespace:=$DRONE_ID serial_no_camera1:=$RS_ODOM_ID \
+                serial_no_camera2:=$RS_FRONT_ID serial_no_camera_r:=$RS_RIGHT_ID serial_no_camera_l:=$RS_LEFT_ID \
+                thermal_video_device:=$THERMAL_CAM
+roslaunch commander commander.launch drone_namespace:=$DRONE_ID
+
+
 exit 0
 

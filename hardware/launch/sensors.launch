@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="drone_namespace"        default="dronexx"/>
+    <arg name="serial_no_camera1"      default="929122110989"/>
+    <arg name="serial_no_camera2"      default="841512071784"/>
+    <arg name="serial_no_camera_l"     default="841612070675"/>
+    <arg name="serial_no_camera_l"     default="923322070266"/>
+    <arg name="thermal_video_device"   default="/dev/v4l/by-id/usb-GroupGets_PureThermal__fw:v1.2.2__8003001e-510a-3138-3533-373900000000-video-index0"/>
+    <arg name="use_all_cams"           default=""/>
+    
+    <group ns="$(arg drone_namespace)">
+        <!-- ###### Starts the realsense node ###### -->
+        <group if="$(arg use_all_cams)">
+            <include file="$(find swarm_mapping)/launch/realsense_cameras.launch">
+                <arg name="tf_namespace"            value="$(arg drone_namespace)"/>
+                <arg name="serial_no_camera1"       value="$(arg serial_no_camera1)"/>
+                <arg name="serial_no_camera2"       value="$(arg serial_no_camera2)"/>
+        </include>
+        </group>
+        <group unless="$(arg use_all_cams)">
+            <include file="$(find swarm_mapping)/launch/realsense_cameras.launch">
+                <arg name="tf_namespace"            value="$(arg drone_namespace)"/>
+                <arg name="serial_no_camera1"       value="$(arg serial_no_camera1)"/>
+                <arg name="serial_no_camera2"       value="$(arg serial_no_camera2)"/>
+        </include>
+        </group>
+        
+        <!-- ###### Starts the mavros node for PX4 ###### -->
+        <include file="$(find swarm_utils)/launch/px4.launch">
+        </include>
+
+        <!-- ###### Starts the thermal cam nodes ###### -->
+        <include file="$(find hardware)/launch/thermal_camera.launch">
+                <arg name="thermal_video_device"       value="$(arg thermal_video_device)"/>
+                <arg name="drone_namespace"            value="$(arg drone_namespace)"/>
+        </include>
+    </group>
+
+</launch>
