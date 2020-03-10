@@ -1,27 +1,23 @@
 <?xml version="1.0"?>
 <launch>
-    <!-- 
-          NOTICE: Installation of rtabmap is required for using this launch file:
-                  For installation type:
-                        apt-get install ros-kinetic-rtabmap-ros
-    -->
+
     <arg name="tf_namespace"            default="drone31"/>
-    <arg name="serial_no_camera1"    	  default="929122110989"/> 			<!-- Note: Replace with actual serial number  old - 908412110632 -->
-    <arg name="serial_no_camera2"    	  default="841512071784"/> 			<!-- Note: Replace with actual serial number -->
+    <arg name="serial_no_cam_odom"    	default="929122110989"/> 			<!-- Note: Replace with actual serial number  old - 908412110632 -->
+    <arg name="serial_no_camera_f"    	default="841512071784"/> 			<!-- Note: Replace with actual serial number -->
     <arg name="serial_no_camera_l"    	default="841612070675"/>
     <arg name="serial_no_camera_r"    	default="923322070266"/>
-    <arg name="device_type_camera1"    	default="t265"/>
-    <arg name="device_type_camera2"    	default="d4.5"/>
+    <arg name="device_type_cam_odom"    default="t265"/>
+    <arg name="device_type_camera_f"    default="d4.5"/>
     <arg name="device_type_camera_l"    default="d4.5"/>
     <arg name="device_type_camera_r"    default="d4.5"/>
     
-    <arg name="camera1"              	  default="cam_odom"/>		<!-- Note: Replace with camera name -->
-    <arg name="camera2"              	  default="cam1"/>		<!-- Note: Replace with camera name -->
+    <arg name="cam_odom"              	default="cam_odom"/>		<!-- Note: Replace with camera name -->
+    <arg name="camera_f"              	default="cam1"/>		<!-- Note: Replace with camera name -->
     <arg name="camera_l"              	default="caml"/>
     <arg name="camera_r"              	default="camr"/>
     
-    <arg name="tf_prefix_camera1"       default="$(arg tf_namespace)/$(arg camera1)"/>
-    <arg name="tf_prefix_camera2"       default="$(arg tf_namespace)/$(arg camera2)"/>
+    <arg name="tf_prefix_cam_odom"      default="$(arg tf_namespace)/$(arg cam_odom)"/>
+    <arg name="tf_prefix_camera_f"      default="$(arg tf_namespace)/$(arg camera_f)"/>
     <arg name="tf_prefix_camera_l"      default="$(arg tf_namespace)/$(arg camera_l)"/>
     <arg name="tf_prefix_camera_r"      default="$(arg tf_namespace)/$(arg camera_r)"/>
     
@@ -49,6 +45,7 @@
     <arg name="depth_width_side"        default="640"/>
     <arg name="depth_height_side"       default="360"/>
     <arg name="depth_fps_side"          default="6"/>
+    <arg name="enable_depth_side"       default="true"/>
     <arg name="enable_gyro_side"        default="false"/>
     <arg name="enable_accel_side"       default="false"/>
 
@@ -64,11 +61,11 @@
     <arg name="color_width"               default="1280"/>
     <arg name="color_height"              default="720"/> -->
   <group ns="$(arg tf_namespace)">
-    <group ns="$(arg camera1)">
+    <group ns="$(arg cam_odom)">
       <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
-        <arg name="device_type"           value="$(arg device_type_camera1)"/>
-        <arg name="serial_no"             value="$(arg serial_no_camera1)"/>
-        <arg name="tf_prefix"         	  value="$(arg tf_prefix_camera1)"/>
+        <arg name="device_type"           value="$(arg device_type_cam_odom)"/>
+        <arg name="serial_no"             value="$(arg serial_no_cam_odom)"/>
+        <arg name="tf_prefix"         	  value="$(arg tf_prefix_cam_odom)"/>
         <arg name="initial_reset"         value="$(arg initial_reset)"/>
         <arg name="enable_fisheye1"       value="$(arg enable_fisheye)"/>
         <arg name="enable_fisheye2"       value="$(arg enable_fisheye)"/>
@@ -78,11 +75,11 @@
       </include>
     </group>
 
-    <group ns="$(arg camera2)">
+    <group ns="$(arg camera_f)">
       <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
-        <arg name="device_type"           value="$(arg device_type_camera2)"/>
-        <arg name="serial_no"             value="$(arg serial_no_camera2)"/>
-        <arg name="tf_prefix"		          value="$(arg tf_prefix_camera2)"/>
+        <arg name="device_type"           value="$(arg device_type_camera_f)"/>
+        <arg name="serial_no"             value="$(arg serial_no_camera_f)"/>
+        <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_f)"/>
         <arg name="initial_reset"         value="$(arg initial_reset)"/>
         <arg name="align_depth"           value="true"/>
         <arg name="filters"               value="pointcloud"/>
@@ -101,7 +98,7 @@
       <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
         <arg name="device_type"           value="$(arg device_type_camera_r)"/>
         <arg name="serial_no"             value="$(arg serial_no_camera_r)"/>
-        <arg name="tf_prefix"		          value="$(arg tf_prefix_camera_r)"/>
+        <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_r)"/>
         <arg name="initial_reset"         value="$(arg initial_reset)"/>
         <arg name="align_depth"           value="false"/>
         <arg name="filters"               value="pointcloud"/>
@@ -111,6 +108,7 @@
         <arg name="enable_color"          value="$(arg enable_color_side)"/>
         <arg name="enable_infra1"         value="$(arg enable_infra1_side)"/>
         <arg name="enable_infra2"         value="$(arg enable_infra2_side)"/>
+        <arg name="enable_depth"          value="$(arg enable_depth_side)"/>
         <arg name="depth_width"           value="$(arg depth_width_side)"/>
         <arg name="depth_height"          value="$(arg depth_height_side)"/>
         <arg name="depth_fps"             value="$(arg depth_fps_side)"/>
@@ -127,7 +125,7 @@
       <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
         <arg name="device_type"           value="$(arg device_type_camera_l)"/>
         <arg name="serial_no"             value="$(arg serial_no_camera_l)"/>
-        <arg name="tf_prefix"		          value="$(arg tf_prefix_camera_l)"/>
+        <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_l)"/>
         <arg name="initial_reset"         value="$(arg initial_reset)"/>
         <arg name="align_depth"           value="false"/>
         <arg name="filters"               value="pointcloud"/>
@@ -137,6 +135,7 @@
         <arg name="enable_color"          value="$(arg enable_color_side)"/>
         <arg name="enable_infra1"         value="$(arg enable_infra1_side)"/>
         <arg name="enable_infra2"         value="$(arg enable_infra2_side)"/>
+        <arg name="enable_depth"          value="$(arg enable_depth_side)"/>
         <arg name="depth_width"           value="$(arg depth_width_side)"/>
         <arg name="depth_height"          value="$(arg depth_height_side)"/>
         <arg name="depth_fps"             value="$(arg depth_fps_side)"/>
@@ -149,7 +148,7 @@
       </include>
     </group>
 
-    <node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0 0 0 0 0 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0 0 0 0 0 0 /$(arg tf_prefix_cam_odom)_link /$(arg tf_prefix_camera_f)_link 100"/>
   </group>
 
 </launch>

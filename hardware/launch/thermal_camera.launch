@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="thermal_video_device" default=""/>
-    <arg name="drone_namespace"      default=""/>
+    <arg name="thermal_video_device"    default=""/>
+    <arg name="drone_namespace"         default=""/>
+    <arg name="thermal_image_width"             default="160"/>
+    <arg name="thermal_image_height"            default="120"/>
     <node name="thermal_cam_node" pkg="usb_cam" type="usb_cam_node">
-        <param name="video_device"    value="$(arg video_device)"/>
-        <param name="image_width"     value="160"/>
-        <param name="image_height"    value="120"/>
-        <param name="pixel_format"    value="uyvy"/>
-        <param name="camera_frame_id" value="$(arg drone_namespace)/thermal_cam"/>
+        <param name="video_device"      value="$(arg video_device)"/>
+        <param name="image_width"       value="$(arg thermal_image_width)"/>
+        <param name="image_height"      value="$(arg thermal_image_height)"/>
+        <param name="pixel_format"      value="uyvy"/>
+        <param name="camera_frame_id"   value="$(arg drone_namespace)/thermal_cam"/>
     </node>
 </launch>
