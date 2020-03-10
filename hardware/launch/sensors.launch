@@ -8,6 +8,7 @@
     <arg name="thermal_image_width"     default="160"/>
     <arg name="thermal_image_height"    default="120"/>
 
+    <!-- ##### Realsense params ##### -->
     <arg name="enable_cam_odom"         default="true"/>    <!-- Set to true to use all 4 cameras; else only front 2 cameras are used -->
     <arg name="enable_camera_f"         default="true"/>
     <arg name="enable_camera_r"         default="true"/>
