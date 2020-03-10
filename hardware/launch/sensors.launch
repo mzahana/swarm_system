@@ -142,8 +142,10 @@
 
         <!-- ###### Starts the thermal cam nodes ###### -->
         <include file="$(find hardware)/launch/thermal_camera.launch">
-            <arg name="thermal_video_device"       value="$(arg thermal_video_device)"/>
-            <arg name="drone_namespace"            value="$(arg drone_namespace)"/>
+            <arg name="thermal_video_device"        value="$(arg thermal_video_device)"/>
+            <arg name="drone_namespace"             value="$(arg drone_namespace)"/>
+            <arg name="thermal_image_height"        value="$(thermal_image_height)"/>
+            <arg name="thermal_image_width"         value="$(thermal_image_width)"/>
         </include>
     </group>
 
