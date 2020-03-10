@@ -8,7 +8,10 @@
     <arg name="thermal_image_width"     default="160"/>
     <arg name="thermal_image_height"    default="120"/>
 
-    <arg name="use_all_cams"            default=""/>    <!-- Set to true to use all 4 cameras; else only front 2 cameras are used -->
+    <arg name="enable_cam_odom"         default="true"/>    <!-- Set to true to use all 4 cameras; else only front 2 cameras are used -->
+    <arg name="enable_camera_f"         default="true"/>
+    <arg name="enable_camera_r"         default="true"/>
+    <arg name="enable_camera_l"         default="true"/>
     <!-- ##### Odom Realsense camera params ##### -->
     <arg name="serial_no_cam_odom"      default=""/>
     <arg name="device_type_cam_odom"    default="t265"/>
@@ -24,10 +27,22 @@
     <arg name="camera_f"              	default="cam1"/>		<!-- Note: Replace with camera name -->
     <arg name="tf_prefix_camera_f"      default="$(arg tf_namespace)/$(arg camera_f)"/>
 
-    <arg name="color_width"             default="640"/>
-    <arg name="color_height"            default="480"/>
-    <arg name="depth_width"             default="640"/>
-    <arg name="depth_height"            default="480"/>
+    <arg name="color_width_f"           default="640"/>
+    <arg name="color_height_f"          default="480"/>
+    <arg name="color_fps_f"             default="30"/>
+    <arg name="enable_color_f"          default="true"/>
+    <arg name="depth_width_f"           default="640"/>
+    <arg name="depth_height_f"          default="480"/>
+    <arg name="depth_fps_f"             default="30"/>
+    <arg name="enable_depth_f"          default="true"/>
+    <arg name="infra1_width_f"          default="640"/>
+    <arg name="infra2_width_f"          default="640"/>
+    <arg name="infra1_height_f"         default="480"/>
+    <arg name="infra2_height_f"         default="480"/>
+    <arg name="infra1_fps_f"            default="30"/>
+    <arg name="infra2_fps_f"            default="30"/>
+    <arg name="enable_infra1_f"         default="true"/>
+    <arg name="enable_infra2_f"         default="true"/>
     <!-- ##### Side Realsense cameras params ##### -->
     <arg name="serial_no_camera_l"      default=""/>
     <arg name="serial_no_camera_r"      default=""/>
@@ -38,103 +53,91 @@
     <arg name="tf_prefix_camera_l"      default="$(arg tf_namespace)/$(arg camera_l)"/>
     <arg name="tf_prefix_camera_r"      default="$(arg tf_namespace)/$(arg camera_r)"/>
 
-    <arg name="color_width_side"        default="640"/>
-    <arg name="color_height_side"       default="360"/>
-    <arg name="color_fps_side"          default="15"/>
-    <arg name="enable_color_side"       default="false"/>
-    <arg name="infra1_width_side"       default="640"/>
-    <arg name="infra1_height_side"      default="360"/>
-    <arg name="infra1_fps_side"         default="15"/>
-    <arg name="enable_infra1_side"      default="false"/>
-    <arg name="infra2_width_side"       default="640"/>
-    <arg name="infra2_height_side"      default="360"/>
-    <arg name="infra2_fps_side"         default="15"/>
-    <arg name="enable_infra2_side"      default="false"/>
-    <arg name="depth_width_side"        default="640"/>
-    <arg name="depth_height_side"       default="360"/>
-    <arg name="depth_fps_side"          default="6"/>
-    <arg name="enable_gyro_side"        default="false"/>
-    <arg name="enable_accel_side"       default="false"/>
+    <arg name="color_width_l_r"         default="640"/>
+    <arg name="color_height_l_r"        default="360"/>
+    <arg name="color_fps_l_r"           default="15"/>
+    <arg name="enable_color_l_r"        default="false"/>
+    <arg name="infra1_width_l_r"        default="640"/>
+    <arg name="infra1_height_l_r"       default="360"/>
+    <arg name="infra1_fps_l_r"          default="15"/>
+    <arg name="enable_infra1_l_r"       default="false"/>
+    <arg name="infra2_width_l_r"        default="640"/>
+    <arg name="infra2_height_l_r"       default="360"/>
+    <arg name="infra2_fps_l_r"          default="15"/>
+    <arg name="enable_infra2_l_r"       default="false"/>
+    <arg name="depth_width_l_r"         default="640"/>
+    <arg name="depth_height_l_r"        default="360"/>
+    <arg name="depth_fps_l_r"           default="6"/>
+    <arg name="enable_depth_l_r"        default="true"/>
+    <arg name="enable_gyro_l_r"         default="false"/>
+    <arg name="enable_accel_l_r"        default="false"/>
     
     <group ns="$(arg drone_namespace)">
         <!-- ###### Starts the realsense node ###### -->
-        <group if="$(arg use_all_cams)">
-            <include file="$(find hardware)/launch/realsense_all_cameras.launch">
-                <arg name="tf_namespace"            value="$(arg drone_namespace)"/>
-                <arg name="serial_no_cam_odom"      value="$(arg serial_no_cam_odom)"/>
-                <arg name="serial_no_camera_f"      value="$(arg serial_no_camera_f)"/>
-                <arg name="serial_no_camera_l"      value="$(arg serial_no_camera_l)"/>
-                <arg name="serial_no_camera_r"      value="$(arg serial_no_camera_r)"/>
+        <include file="$(find hardware)/launch/realsense_all_cameras.launch">
+            <arg name="tf_namespace"            value="$(arg drone_namespace)"/>
+            <arg name="serial_no_cam_odom"      value="$(arg serial_no_cam_odom)"/>
+            <arg name="serial_no_camera_f"      value="$(arg serial_no_camera_f)"/>
+            <arg name="serial_no_camera_l"      value="$(arg serial_no_camera_l)"/>
+            <arg name="serial_no_camera_r"      value="$(arg serial_no_camera_r)"/>
 
-                <arg name="color_width"             value="$(arg color_width)"/>
-                <arg name="color_height"            value="$(arg color_height)"/>
-                <arg name="depth_width"             value="$(arg depth_width)"/>
-                <arg name="device_type_camera_f"    value="$(arg device_type_camera_f)"/>
-                <arg name="camera_f"                value="$(arg camera_f)"/>
-                <arg name="tf_prefix_camera_f"      value="$(arg tf_prefix_camera_f)"/>
+            <arg name="color_width_f"           value="$(arg color_width_f)"/>
+            <arg name="color_height_f"          value="$(arg color_height_f)"/>
+            <arg name="color_fps_f"             value="$(arg color_fps_f)"/> 
+            <arg name="enable_color_f"          value="$(arg enable_color_f)"/>
+            <arg name="infra1_width_f"          value="$(arg infra1_width_f)"/>
+            <arg name="infra2_width_f"          value="$(arg infra1_width_f)"/>
+            <arg name="infra1_height_f"         value="$(arg infra1_height_f)"/>
+            <arg name="infra2_height_f"         value="$(arg infra1_height_f)"/>
+            <arg name="infra1_fps_f"            value="$(arg infra1_fps_f)"/>
+            <arg name="infra2_fps_f"            value="$(arg infra2_fps_f)"/>
+            <arg name="enable_infra1_f"         value="$(arg enable_infra1_f)"/>
+            <arg name="enable_infra2_f"         value="$(arg enable_infra2_f)"/>
+            <arg name="depth_width_f"           value="$(arg depth_width_f)"/>
+            <arg name="depth_width_f"           value="$(arg depth_height_f)"/>
+            <arg name="depth_fps_f"             value="$(arg depth_fps_f)"/>
+            <arg name="enable_depth_f"          value="$(arg enable_depth_f)"/>
+            <arg name="device_type_camera_f"    value="$(arg device_type_camera_f)"/>
+            <arg name="camera_f"                value="$(arg camera_f)"/>
+            <arg name="tf_prefix_camera_f"      value="$(arg tf_prefix_camera_f)"/>
 
-                <arg name="color_width_side"        value="$(arg color_width_side)"/>
-                <arg name="color_height_side"       value="$(arg color_height_side)"/>
-                <arg name="color_fps_side"          value="$(arg color_fps_side)"/>
-                <arg name="enable_color_side"       value="$(arg enable_color_side)"/>
-                <arg name="enable_infra1_side"      value="$(arg enable_infra1_side)"/>
-                <arg name="enable_infra2_side"      value="$(arg enable_infra2_side)"/>
-                <arg name="infra1_width_side"       value="$(arg infra1_width_side)"/>
-                <arg name="infra2_width_side"       value="$(arg infra1_width_side)"/>
-                <arg name="infra1_height_side"      value="$(arg infra1_height_side)"/>
-                <arg name="infra2_height_side"      value="$(arg infra1_height_side)"/>
-                <arg name="infra1_fps_side"         value="$(arg infra1_fps_side)"/>
-                <arg name="infra2_fps_side"         value="$(arg infra2_fps_side)"/>
-                <arg name="depth_width_side"        value="$(arg depth_width_side)"/>
-                <arg name="depth_height_side"       value="$(arg depth_height_side)"/>
-                <arg name="depth_fps_side"          value="$(arg depth_fps_side)"/>
-                <arg name="enable_accel_side"       value="$(arg enable_accel_side)"/>
-                <arg name="enable_gyro_side"        value="$(arg enable_gyro_side)"/>
-                <arg name="device_type_camera_l"    value="$(arg device_type_camera_l)"/>                                
-                <arg name="device_type_camera_r"    value="$(arg device_type_camera_r)"/>
-                <arg name="camera_l"                value="$(arg camera_l)"/>
-                <arg name="camera_r"                value="$(arg camera_r)"/>
-                <arg name="tf_prefix_camera_l"      value="$(arg tf_prefix_camera_l)"/>
-                <arg name="tf_prefix_camera_r"      value="$(arg tf_prefix_camera_r)"/>
+            <arg name="color_width_l_r"         value="$(arg color_width_l_r)"/>
+            <arg name="color_height_l_r"        value="$(arg color_height_l_r)"/>
+            <arg name="color_fps_l_r"           value="$(arg color_fps_l_r)"/>
+            <arg name="enable_color_l_r"        value="$(arg enable_color_l_r)"/>
+            <arg name="infra1_width_l_r"        value="$(arg infra1_width_l_r)"/>
+            <arg name="infra2_width_l_r"        value="$(arg infra1_width_l_r)"/>
+            <arg name="infra1_height_l_r"       value="$(arg infra1_height_l_r)"/>
+            <arg name="infra2_height_l_r"       value="$(arg infra1_height_l_r)"/>
+            <arg name="infra1_fps_l_r"          value="$(arg infra1_fps_l_r)"/>
+            <arg name="infra2_fps_l_r"          value="$(arg infra2_fps_l_r)"/>
+            <arg name="enable_infra1_l_r"       value="$(arg enable_infra1_l_r)"/>
+            <arg name="enable_infra2_l_r"       value="$(arg enable_infra2_l_r)"/>
+            <arg name="depth_width_l_r"         value="$(arg depth_width_l_r)"/>
+            <arg name="depth_height_l_r"        value="$(arg depth_height_l_r)"/>
+            <arg name="depth_fps_l_r"           value="$(arg depth_fps_l_r)"/>
+            <arg name="enable_depth_l_r"        value="$(arg enable_depth_l_r)"/>
+            <arg name="enable_accel_l_r"        value="$(arg enable_accel_l_r)"/>
+            <arg name="enable_gyro_l_r"         value="$(arg enable_gyro_l_r)"/>
+            <arg name="device_type_camera_l"    value="$(arg device_type_camera_l)"/>                                
+            <arg name="device_type_camera_r"    value="$(arg device_type_camera_r)"/>
+            <arg name="camera_l"                value="$(arg camera_l)"/>
+            <arg name="camera_r"                value="$(arg camera_r)"/>
+            <arg name="tf_prefix_camera_l"      value="$(arg tf_prefix_camera_l)"/>
+            <arg name="tf_prefix_camera_r"      value="$(arg tf_prefix_camera_r)"/>
 
-                <arg name="device_type_cam_odom"    value="$(arg device_type_cam_odom)"/>
-                <arg name="t265_imu_unite"          value="$(arg t265_imu_unite)"/>
-                <arg name="cam_odom"                value="$(arg cam_odom)"/>
-                <arg name="tf_prefix_cam_odom"      value="$(arg tf_prefix_cam_odom)"/>
-                <!-- <arg name="" value="$(arg )"/> -->
+            <arg name="device_type_cam_odom"    value="$(arg device_type_cam_odom)"/>
+            <arg name="t265_imu_unite"          value="$(arg t265_imu_unite)"/>
+            <arg name="cam_odom"                value="$(arg cam_odom)"/>
+            <arg name="tf_prefix_cam_odom"      value="$(arg tf_prefix_cam_odom)"/>
+            <!-- <arg name="" value="$(arg )"/> -->
 
-                <arg name="clip_distance"           value="$(arg clip_distance)"/>
+            <arg name="clip_distance"           value="$(arg clip_distance)"/>
 
-                <arg name="d435_imu_unite"          value="$(arg d435_imu_unite)"/>
-                <arg name="accel_fps_d435"          value="$(arg accel_fps_d435)"/>
-                <arg name="gyro_fps_d435"           value="$(arg gyro_fps_d435)"/>
-        </include>
-        </group>
-        <group unless="$(arg use_all_cams)">
-            <include file="$(find hardware)/launch/realsense_main_cameras.launch">
-                <arg name="tf_namespace"            value="$(arg drone_namespace)"/>
-                <arg name="serial_no_cam_odom"      value="$(arg serial_no_cam_odom)"/>
-                <arg name="serial_no_camera_f"      value="$(arg serial_no_camera_f)"/>
-                
-                <arg name="color_width"             value="$(arg color_width)"/>
-                <arg name="color_height"            value="$(arg color_height)"/>
-                <arg name="depth_width"             value="$(arg depth_width)"/>
-                <arg name="device_type_camera_f"    value="$(arg device_type_camera_f)"/>
-                <arg name="camera_f"                value="$(arg camera_f)"/>
-                <arg name="tf_prefix_camera_f"      value="$(arg tf_prefix_camera_f)"/>
-
-                <arg name="device_type_cam_odom"    value="$(arg device_type_cam_odom)"/>
-                <arg name="t265_imu_unite"          value="$(arg t265_imu_unite)"/>
-                <arg name="cam_odom"                value="$(arg cam_odom)"/>
-                <arg name="tf_prefix_cam_odom"      value="$(arg tf_prefix_cam_odom)"/>
-                
-                <arg name="clip_distance"           value="$(arg clip_distance)"/>
-
-                <arg name="d435_imu_unite"          value="$(arg d435_imu_unite)"/>
-                <arg name="accel_fps_d435"          value="$(arg accel_fps_d435)"/>
-                <arg name="gyro_fps_d435"           value="$(arg gyro_fps_d435)"/>
-        </include>
-        </group>
+            <arg name="d435_imu_unite"          value="$(arg d435_imu_unite)"/>
+            <arg name="accel_fps_d435"          value="$(arg accel_fps_d435)"/>
+            <arg name="gyro_fps_d435"           value="$(arg gyro_fps_d435)"/>
+    </include>
         
         <!-- ###### Starts the mavros node for PX4 ###### -->
         <include file="$(find swarm_utils)/launch/px4.launch">
