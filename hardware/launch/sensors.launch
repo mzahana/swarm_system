@@ -86,6 +86,10 @@
         <group if="$(arg enable_realsense)">
             <include file="$(find hardware)/launch/realsense_all_cameras.launch">
                 <arg name="tf_namespace"            value="$(arg drone_namespace)"/>
+                <arg name="enable_cam_odom"         value="$(arg enable_cam_odom)"/>
+                <arg name="enable_camera_f"         value="$(arg enable_camera_f)"/>
+                <arg name="enable_camera_r"         value="$(arg enable_camera_r)"/>
+                <arg name="enable_camera_l"         value="$(arg enable_camera_l)"/>
                 <arg name="serial_no_cam_odom"      value="$(arg serial_no_cam_odom)"/>
                 <arg name="serial_no_camera_f"      value="$(arg serial_no_camera_f)"/>
                 <arg name="serial_no_camera_l"      value="$(arg serial_no_camera_l)"/>
@@ -96,15 +100,15 @@
                 <arg name="color_fps_f"             value="$(arg color_fps_f)"/> 
                 <arg name="enable_color_f"          value="$(arg enable_color_f)"/>
                 <arg name="infra1_width_f"          value="$(arg infra1_width_f)"/>
-                <arg name="infra2_width_f"          value="$(arg infra1_width_f)"/>
+                <arg name="infra2_width_f"          value="$(arg infra2_width_f)"/>
                 <arg name="infra1_height_f"         value="$(arg infra1_height_f)"/>
-                <arg name="infra2_height_f"         value="$(arg infra1_height_f)"/>
+                <arg name="infra2_height_f"         value="$(arg infra2_height_f)"/>
                 <arg name="infra1_fps_f"            value="$(arg infra1_fps_f)"/>
                 <arg name="infra2_fps_f"            value="$(arg infra2_fps_f)"/>
                 <arg name="enable_infra1_f"         value="$(arg enable_infra1_f)"/>
                 <arg name="enable_infra2_f"         value="$(arg enable_infra2_f)"/>
                 <arg name="depth_width_f"           value="$(arg depth_width_f)"/>
-                <arg name="depth_width_f"           value="$(arg depth_height_f)"/>
+                <arg name="depth_height_f"          value="$(arg depth_height_f)"/>
                 <arg name="depth_fps_f"             value="$(arg depth_fps_f)"/>
                 <arg name="enable_depth_f"          value="$(arg enable_depth_f)"/>
                 <arg name="device_type_camera_f"    value="$(arg device_type_camera_f)"/>

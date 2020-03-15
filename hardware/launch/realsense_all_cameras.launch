@@ -38,12 +38,9 @@
     <arg name="depth_height_f"          default="480"/>
     <arg name="depth_fps_f"             default="30"/>
     <arg name="enable_depth_f"          default="true"/>
-    <arg name="infra1_width_f"          default="640"/>
-    <arg name="infra2_width_f"          default="640"/>
-    <arg name="infra1_height_f"         default="480"/>
-    <arg name="infra2_height_f"         default="480"/>
-    <arg name="infra1_fps_f"            default="30"/>
-    <arg name="infra2_fps_f"            default="30"/>
+    <arg name="infra_width_f"          default="640"/>
+    <arg name="infra_height_f"         default="480"/>
+    <arg name="infra_fps_f"            default="30"/>
     <arg name="enable_infra1_f"         default="true"/>
     <arg name="enable_infra2_f"         default="true"/>
 
@@ -51,13 +48,10 @@
     <arg name="color_height_l_r"       default="360"/>
     <arg name="color_fps_l_r"          default="15"/>
     <arg name="enable_color_l_r"       default="false"/>
-    <arg name="infra1_width_l_r"       default="640"/>
-    <arg name="infra1_height_l_r"      default="360"/>
-    <arg name="infra1_fps_l_r"         default="15"/>
+    <arg name="infra_width_l_r"       default="640"/>
+    <arg name="infra_height_l_r"      default="360"/>
+    <arg name="infra_fps_l_r"         default="15"/>
     <arg name="enable_infra1_l_r"      default="false"/>
-    <arg name="infra2_width_l_r"       default="640"/>
-    <arg name="infra2_height_l_r"      default="360"/>
-    <arg name="infra2_fps_l_r"         default="15"/>
     <arg name="enable_infra2_l_r"      default="false"/>
     <arg name="depth_width_l_r"        default="640"/>
     <arg name="depth_height_l_r"       default="360"/>
@@ -103,12 +97,9 @@
                     <arg name="color_height"          value="$(arg color_height_f)"/>
                     <arg name="color_fps"             value="$(arg color_fps_f)"/> 
                     <arg name="enable_color"          value="$(arg enable_color_f)"/>
-                    <arg name="infra1_width"          value="$(arg infra1_width_f)"/>
-                    <arg name="infra2_width"          value="$(arg infra2_width_f)"/>
-                    <arg name="infra1_height"         value="$(arg infra1_height_f)"/>
-                    <arg name="infra2_height"         value="$(arg infra2_height_f)"/>
-                    <arg name="infra1_fps"            value="$(arg infra1_fps_f)"/>
-                    <arg name="infra2_fps"            value="$(arg infra2_fps_f)"/>
+                    <arg name="infra_width"          value="$(arg infra1_width_f)"/>
+                    <arg name="infra_height"         value="$(arg infra1_height_f)"/>
+                    <arg name="infra_fps"            value="$(arg infra1_fps_f)"/>
                     <arg name="enable_infra1"         value="$(arg enable_infra1_f)"/>
                     <arg name="enable_infra2"         value="$(arg enable_infra2_f)"/>
                     <arg name="depth_width"           value="$(arg depth_width_f)"/>
@@ -136,12 +127,9 @@
                     <arg name="color_height"          value="$(arg color_height_l_r)"/>
                     <arg name="color_fps"             value="$(arg color_fps_l_r)"/>
                     <arg name="enable_color"          value="$(arg enable_color_l_r)"/>
-                    <arg name="infra1_width"          value="$(arg infra1_width_l_r)"/>
-                    <arg name="infra2_width"          value="$(arg infra2_width_l_r)"/>
-                    <arg name="infra1_height"         value="$(arg infra1_height_l_r)"/>
-                    <arg name="infra2_height"         value="$(arg infra2_height_l_r)"/>
-                    <arg name="infra1_fps"            value="$(arg infra1_fps_l_r)"/>
-                    <arg name="infra2_fps"            value="$(arg infra2_fps_l_r)"/>
+                    <arg name="infra_width"          value="$(arg infra1_width_l_r)"/>
+                    <arg name="infra_height"         value="$(arg infra1_height_l_r)"/>
+                    <arg name="infra_fps"            value="$(arg infra1_fps_l_r)"/>
                     <arg name="enable_infra1"         value="$(arg enable_infra1_l_r)"/>
                     <arg name="enable_infra2"         value="$(arg enable_infra2_l_r)"/>
                     <arg name="enable_depth"          value="$(arg enable_depth_l_r)"/>
@@ -171,12 +159,9 @@
                     <arg name="color_height"          value="$(arg color_height_l_r)"/>
                     <arg name="color_fps"             value="$(arg color_fps_l_r)"/>
                     <arg name="enable_color"          value="$(arg enable_color_l_r)"/>
-                    <arg name="infra1_width"          value="$(arg infra1_width_l_r)"/>
-                    <arg name="infra2_width"          value="$(arg infra2_width_l_r)"/>
-                    <arg name="infra1_height"         value="$(arg infra1_height_l_r)"/>
-                    <arg name="infra2_height"         value="$(arg infra2_height_l_r)"/>
-                    <arg name="infra1_fps"            value="$(arg infra1_fps_l_r)"/>
-                    <arg name="infra2_fps"            value="$(arg infra2_fps_l_r)"/>
+                    <arg name="infra_width"          value="$(arg infra1_width_l_r)"/>
+                    <arg name="infra_height"         value="$(arg infra1_height_l_r)"/>
+                    <arg name="infra_fps"            value="$(arg infra1_fps_l_r)"/>
                     <arg name="enable_infra1"         value="$(arg enable_infra1_l_r)"/>
                     <arg name="enable_infra2"         value="$(arg enable_infra2_l_r)"/>
                     <arg name="enable_depth"          value="$(arg enable_depth_l_r)"/>
