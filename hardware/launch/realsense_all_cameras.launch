@@ -47,24 +47,24 @@
     <arg name="enable_infra1_f"         default="true"/>
     <arg name="enable_infra2_f"         default="true"/>
 
-    <arg name="color_width_side"        default="640"/>
-    <arg name="color_height_side"       default="360"/>
-    <arg name="color_fps_side"          default="15"/>
-    <arg name="enable_color_side"       default="false"/>
-    <arg name="infra1_width_side"       default="640"/>
-    <arg name="infra1_height_side"      default="360"/>
-    <arg name="infra1_fps_side"         default="15"/>
-    <arg name="enable_infra1_side"      default="false"/>
-    <arg name="infra2_width_side"       default="640"/>
-    <arg name="infra2_height_side"      default="360"/>
-    <arg name="infra2_fps_side"         default="15"/>
-    <arg name="enable_infra2_side"      default="false"/>
-    <arg name="depth_width_side"        default="640"/>
-    <arg name="depth_height_side"       default="360"/>
-    <arg name="depth_fps_side"          default="6"/>
-    <arg name="enable_depth_side"       default="true"/>
-    <arg name="enable_gyro_side"        default="false"/>
-    <arg name="enable_accel_side"       default="false"/>
+    <arg name="color_width_l_r"        default="640"/>
+    <arg name="color_height_l_r"       default="360"/>
+    <arg name="color_fps_l_r"          default="15"/>
+    <arg name="enable_color_l_r"       default="false"/>
+    <arg name="infra1_width_l_r"       default="640"/>
+    <arg name="infra1_height_l_r"      default="360"/>
+    <arg name="infra1_fps_l_r"         default="15"/>
+    <arg name="enable_infra1_l_r"      default="false"/>
+    <arg name="infra2_width_l_r"       default="640"/>
+    <arg name="infra2_height_l_r"      default="360"/>
+    <arg name="infra2_fps_l_r"         default="15"/>
+    <arg name="enable_infra2_l_r"      default="false"/>
+    <arg name="depth_width_l_r"        default="640"/>
+    <arg name="depth_height_l_r"       default="360"/>
+    <arg name="depth_fps_l_r"          default="6"/>
+    <arg name="enable_depth_l_r"       default="true"/>
+    <arg name="enable_gyro_l_r"        default="false"/>
+    <arg name="enable_accel_l_r"       default="false"/>
 
     <arg name="topic_odom_in"           default="odom_in"/>
     <arg name="calib_odom_file"         default=""/>
@@ -73,121 +73,128 @@
     <arg name="gyro_fps_d435"           default="400"/>
     <arg name="accel_fps_d435"          default="250"/>
 
-    <!-- <arg name="depth_width"   default="1280"/>
-    <arg name="depth_height"  default="720"/>
-    <arg name="color_width"               default="1280"/>
-    <arg name="color_height"              default="720"/> -->
-
-    <group if="$(arg enable_cam_odom)">
-        <group ns="$(arg tf_namespace)">
+    <group ns="$(arg tf_namespace)">
+        <group if="$(arg enable_cam_odom)">
             <group ns="$(arg cam_odom)">
-            <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
-                <arg name="device_type"           value="$(arg device_type_cam_odom)"/>
-                <arg name="serial_no"             value="$(arg serial_no_cam_odom)"/>
-                <arg name="tf_prefix"         	  value="$(arg tf_prefix_cam_odom)"/>
-                <arg name="initial_reset"         value="$(arg initial_reset)"/>
-                <arg name="enable_fisheye1"       value="$(arg enable_fisheye)"/>
-                <arg name="enable_fisheye2"       value="$(arg enable_fisheye)"/>
-                <arg name="topic_odom_in"         value="$(arg topic_odom_in)"/>
-                <arg name="calib_odom_file"       value="$(arg calib_odom_file)"/>
-                <arg name="unite_imu_method"      value="$(arg t265_imu_unite)"/>
-            </include>
+                <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+                    <arg name="device_type"           value="$(arg device_type_cam_odom)"/>
+                    <arg name="serial_no"             value="$(arg serial_no_cam_odom)"/>
+                    <arg name="tf_prefix"         	  value="$(arg tf_prefix_cam_odom)"/>
+                    <arg name="initial_reset"         value="$(arg initial_reset)"/>
+                    <arg name="enable_fisheye1"       value="$(arg enable_fisheye)"/>
+                    <arg name="enable_fisheye2"       value="$(arg enable_fisheye)"/>
+                    <arg name="topic_odom_in"         value="$(arg topic_odom_in)"/>
+                    <arg name="calib_odom_file"       value="$(arg calib_odom_file)"/>
+                    <arg name="unite_imu_method"      value="$(arg t265_imu_unite)"/>
+                </include>
+            </group>
         </group>
-    </group>
 
-    <group if="$(arg enable_camera_f)">
-        <group ns="$(arg camera_f)">
-        <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
-            <arg name="device_type"           value="$(arg device_type_camera_f)"/>
-            <arg name="serial_no"             value="$(arg serial_no_camera_f)"/>
-            <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_f)"/>
-            <arg name="initial_reset"         value="$(arg initial_reset)"/>
-            <arg name="align_depth"           value="true"/>
-            <arg name="filters"               value="pointcloud"/>
-            <arg name="color_width"           value="$(arg color_width_f)"/>
-            <arg name="color_height"          value="$(arg color_height_f)"/>
-            <arg name="color_fps"             value="$(arg color_fps_f)"/> 
-            <arg name="enable_color"          value="$(arg enable_color_f)"/>
-            <arg name="infra1_width"          value="$(arg infra1_width_f)"/>
-            <arg name="infra2_width"          value="$(arg infra1_width_f)"/>
-            <arg name="infra1_height"         value="$(arg infra1_height_f)"/>
-            <arg name="infra2_height"         value="$(arg infra1_height_f)"/>
-            <arg name="infra1_fps"            value="$(arg infra1_fps_f)"/>
-            <arg name="infra2_fps"            value="$(arg infra2_fps_f)"/>
-            <arg name="enable_infra1"         value="$(arg enable_infra1_f)"/>
-            <arg name="enable_infra2"         value="$(arg enable_infra2_f)"/>
-            <arg name="depth_width"           value="$(arg depth_width_f)"/>
-            <arg name="depth_width"           value="$(arg depth_height_f)"/>
-            <arg name="depth_fps"             value="$(arg depth_fps_f)"/>
-            <arg name="enable_depth"          value="$(arg enable_depth_f)"/>
-            <arg name="clip_distance"         value="$(arg clip_distance)"/>
-            <arg name="unite_imu_method"      value="$(arg d435_imu_unite)"/>
-            <arg name="accel_fps"             value="$(arg accel_fps_d435)"/>
-            <arg name="gyro_fps"              value="$(arg gyro_fps_d435)"/>
-        </include>
+        <group if="$(arg enable_camera_f)">
+            <group ns="$(arg camera_f)">
+                <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+                    <arg name="device_type"           value="$(arg device_type_camera_f)"/>
+                    <arg name="serial_no"             value="$(arg serial_no_camera_f)"/>
+                    <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_f)"/>
+                    <arg name="initial_reset"         value="$(arg initial_reset)"/>
+                    <arg name="align_depth"           value="true"/>
+                    <arg name="filters"               value="pointcloud"/>
+                    <arg name="color_width"           value="$(arg color_width_f)"/>
+                    <arg name="color_height"          value="$(arg color_height_f)"/>
+                    <arg name="color_fps"             value="$(arg color_fps_f)"/> 
+                    <arg name="enable_color"          value="$(arg enable_color_f)"/>
+                    <arg name="infra1_width"          value="$(arg infra1_width_f)"/>
+                    <arg name="infra2_width"          value="$(arg infra2_width_f)"/>
+                    <arg name="infra1_height"         value="$(arg infra1_height_f)"/>
+                    <arg name="infra2_height"         value="$(arg infra2_height_f)"/>
+                    <arg name="infra1_fps"            value="$(arg infra1_fps_f)"/>
+                    <arg name="infra2_fps"            value="$(arg infra2_fps_f)"/>
+                    <arg name="enable_infra1"         value="$(arg enable_infra1_f)"/>
+                    <arg name="enable_infra2"         value="$(arg enable_infra2_f)"/>
+                    <arg name="depth_width"           value="$(arg depth_width_f)"/>
+                    <arg name="depth_height"           value="$(arg depth_height_f)"/>
+                    <arg name="depth_fps"             value="$(arg depth_fps_f)"/>
+                    <arg name="enable_depth"          value="$(arg enable_depth_f)"/>
+                    <arg name="clip_distance"         value="$(arg clip_distance)"/>
+                    <arg name="unite_imu_method"      value="$(arg d435_imu_unite)"/>
+                    <arg name="accel_fps"             value="$(arg accel_fps_d435)"/>
+                    <arg name="gyro_fps"              value="$(arg gyro_fps_d435)"/>
+                </include>
+            </group>
         </group>
-    </group>
 
-    <group if="$(arg enable_camera_r)">
-        <group ns="$(arg camera_r)">
-        <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
-            <arg name="device_type"           value="$(arg device_type_camera_r)"/>
-            <arg name="serial_no"             value="$(arg serial_no_camera_r)"/>
-            <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_r)"/>
-            <arg name="initial_reset"         value="$(arg initial_reset)"/>
-            <arg name="align_depth"           value="false"/>
-            <arg name="filters"               value="pointcloud"/>
-            <arg name="color_width"           value="$(arg color_width_side)"/>
-            <arg name="color_height"          value="$(arg color_height_side)"/>
-            <arg name="color_fps"             value="$(arg color_fps_side)"/>
-            <arg name="enable_color"          value="$(arg enable_color_side)"/>
-            <arg name="enable_infra1"         value="$(arg enable_infra1_side)"/>
-            <arg name="enable_infra2"         value="$(arg enable_infra2_side)"/>
-            <arg name="enable_depth"          value="$(arg enable_depth_side)"/>
-            <arg name="depth_width"           value="$(arg depth_width_side)"/>
-            <arg name="depth_height"          value="$(arg depth_height_side)"/>
-            <arg name="depth_fps"             value="$(arg depth_fps_side)"/>
-            <arg name="clip_distance"         value="$(arg clip_distance)"/>
-            <arg name="unite_imu_method"      value="$(arg d435_imu_unite)"/>
-            <arg name="enable_accel"          value="$(arg enable_accel_side)"/>
-            <arg name="enable_gyro"           value="$(arg enable_gyro_side)"/>
-            <arg name="accel_fps"             value="$(arg accel_fps_d435)"/>
-            <arg name="gyro_fps"              value="$(arg gyro_fps_d435)"/>
-        </include>
+        <group if="$(arg enable_camera_r)">
+            <group ns="$(arg camera_r)">
+                <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+                    <arg name="device_type"           value="$(arg device_type_camera_r)"/>
+                    <arg name="serial_no"             value="$(arg serial_no_camera_r)"/>
+                    <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_r)"/>
+                    <arg name="initial_reset"         value="$(arg initial_reset)"/>
+                    <arg name="align_depth"           value="false"/>
+                    <arg name="filters"               value="pointcloud"/>
+                    <arg name="color_width"           value="$(arg color_width_l_r)"/>
+                    <arg name="color_height"          value="$(arg color_height_l_r)"/>
+                    <arg name="color_fps"             value="$(arg color_fps_l_r)"/>
+                    <arg name="enable_color"          value="$(arg enable_color_l_r)"/>
+                    <arg name="infra1_width"          value="$(arg infra1_width_l_r)"/>
+                    <arg name="infra2_width"          value="$(arg infra2_width_l_r)"/>
+                    <arg name="infra1_height"         value="$(arg infra1_height_l_r)"/>
+                    <arg name="infra2_height"         value="$(arg infra2_height_l_r)"/>
+                    <arg name="infra1_fps"            value="$(arg infra1_fps_l_r)"/>
+                    <arg name="infra2_fps"            value="$(arg infra2_fps_l_r)"/>
+                    <arg name="enable_infra1"         value="$(arg enable_infra1_l_r)"/>
+                    <arg name="enable_infra2"         value="$(arg enable_infra2_l_r)"/>
+                    <arg name="enable_depth"          value="$(arg enable_depth_l_r)"/>
+                    <arg name="depth_width"           value="$(arg depth_width_l_r)"/>
+                    <arg name="depth_height"          value="$(arg depth_height_l_r)"/>
+                    <arg name="depth_fps"             value="$(arg depth_fps_l_r)"/>
+                    <arg name="clip_distance"         value="$(arg clip_distance)"/>
+                    <arg name="unite_imu_method"      value="$(arg d435_imu_unite)"/>
+                    <arg name="enable_accel"          value="$(arg enable_accel_l_r)"/>
+                    <arg name="enable_gyro"           value="$(arg enable_gyro_l_r)"/>
+                    <arg name="accel_fps"             value="$(arg accel_fps_d435)"/>
+                    <arg name="gyro_fps"              value="$(arg gyro_fps_d435)"/>
+                </include>
+            </group>
         </group>
-    </group>
 
-    <group if="$(arg enable_camera_l)">
-        <group ns="$(arg camera_l)">
-        <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
-            <arg name="device_type"           value="$(arg device_type_camera_l)"/>
-            <arg name="serial_no"             value="$(arg serial_no_camera_l)"/>
-            <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_l)"/>
-            <arg name="initial_reset"         value="$(arg initial_reset)"/>
-            <arg name="align_depth"           value="false"/>
-            <arg name="filters"               value="pointcloud"/>
-            <arg name="color_width"           value="$(arg color_width_side)"/>
-            <arg name="color_height"          value="$(arg color_height_side)"/>
-            <arg name="color_fps"             value="$(arg color_fps_side)"/>
-            <arg name="enable_color"          value="$(arg enable_color_side)"/>
-            <arg name="enable_infra1"         value="$(arg enable_infra1_side)"/>
-            <arg name="enable_infra2"         value="$(arg enable_infra2_side)"/>
-            <arg name="enable_depth"          value="$(arg enable_depth_side)"/>
-            <arg name="depth_width"           value="$(arg depth_width_side)"/>
-            <arg name="depth_height"          value="$(arg depth_height_side)"/>
-            <arg name="depth_fps"             value="$(arg depth_fps_side)"/>
-            <arg name="clip_distance"         value="$(arg clip_distance)"/>
-            <arg name="unite_imu_method"      value="$(arg d435_imu_unite)"/>
-            <arg name="enable_accel"          value="$(arg enable_accel_side)"/>
-            <arg name="enable_gyro"           value="$(arg enable_gyro_side)"/>
-            <arg name="accel_fps"             value="$(arg accel_fps_d435)"/>
-            <arg name="gyro_fps"              value="$(arg gyro_fps_d435)"/>
-        </include>
+        <group if="$(arg enable_camera_l)">
+            <group ns="$(arg camera_l)">
+                <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+                    <arg name="device_type"           value="$(arg device_type_camera_l)"/>
+                    <arg name="serial_no"             value="$(arg serial_no_camera_l)"/>
+                    <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_l)"/>
+                    <arg name="initial_reset"         value="$(arg initial_reset)"/>
+                    <arg name="align_depth"           value="false"/>
+                    <arg name="filters"               value="pointcloud"/>
+                    <arg name="color_width"           value="$(arg color_width_l_r)"/>
+                    <arg name="color_height"          value="$(arg color_height_l_r)"/>
+                    <arg name="color_fps"             value="$(arg color_fps_l_r)"/>
+                    <arg name="enable_color"          value="$(arg enable_color_l_r)"/>
+                    <arg name="infra1_width"          value="$(arg infra1_width_l_r)"/>
+                    <arg name="infra2_width"          value="$(arg infra2_width_l_r)"/>
+                    <arg name="infra1_height"         value="$(arg infra1_height_l_r)"/>
+                    <arg name="infra2_height"         value="$(arg infra2_height_l_r)"/>
+                    <arg name="infra1_fps"            value="$(arg infra1_fps_l_r)"/>
+                    <arg name="infra2_fps"            value="$(arg infra2_fps_l_r)"/>
+                    <arg name="enable_infra1"         value="$(arg enable_infra1_l_r)"/>
+                    <arg name="enable_infra2"         value="$(arg enable_infra2_l_r)"/>
+                    <arg name="enable_depth"          value="$(arg enable_depth_l_r)"/>
+                    <arg name="depth_width"           value="$(arg depth_width_l_r)"/>
+                    <arg name="depth_height"          value="$(arg depth_height_l_r)"/>
+                    <arg name="depth_fps"             value="$(arg depth_fps_l_r)"/>
+                    <arg name="clip_distance"         value="$(arg clip_distance)"/>
+                    <arg name="unite_imu_method"      value="$(arg d435_imu_unite)"/>
+                    <arg name="enable_accel"          value="$(arg enable_accel_l_r)"/>
+                    <arg name="enable_gyro"           value="$(arg enable_gyro_l_r)"/>
+                    <arg name="accel_fps"             value="$(arg accel_fps_d435)"/>
+                    <arg name="gyro_fps"              value="$(arg gyro_fps_d435)"/>
+                </include>
+            </group>
         </group>
-    </group>
 
-    <node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0 0 0 0 0 0 /$(arg tf_prefix_cam_odom)_link /$(arg tf_prefix_camera_f)_link 100"/>
-  </group>
+        <node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0 0 0 0 0 0 /$(arg tf_prefix_cam_odom)_link /$(arg tf_prefix_camera_f)_link 100"/>
+    </group>
 
 </launch>
 

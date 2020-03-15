@@ -9,3 +9,4 @@ topic_watchdog:
     - "roslaunch hardware realsense_all_cameras.launch enable_cam_odom:=true"
     - "roslaunch hardware realsense_all_cameras.launch enable_px4:=true"
     - "roslaunch hardware realsense_all_cameras.launch enable_thermal_cam:=true"
+  watchdog_period: 15

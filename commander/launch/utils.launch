@@ -14,7 +14,7 @@
 
     <group ns="$(arg drone_namespace)">
 
-        <rosparam command="load" file="$(find swarm_system)/config/swarm_config.yaml" />
+        <rosparam command="load" file="$(find swarm_system)/config/swarm_params.yaml" />
 
         <node name="cam_odom_correction_tf" pkg="tf" type="static_transform_publisher" args="$(arg odom_cam_to_drone_center_trans_x) $(arg odom_cam_to_drone_center_trans_y) $(arg odom_cam_to_drone_center_trans_z) $(arg odom_cam_to_drone_center_rot_yaw) $(arg odom_cam_to_drone_center_rot_pit) $(arg odom_cam_to_drone_center_rot_rol) $(arg drone_namespace)/cam_odom_corr $(arg drone_namespace)/cam_odom_odom_frame 10"/>
         <node name="mavros_temp_tf"         pkg="tf" type="static_transform_publisher" args="0 0 0 -$(arg mavros_ned_rot) 0 0 $(arg drone_namespace)/cam_odom_odom_frame $(arg drone_namespace)/cam_odom_mavros_temp_frame 10"/>
