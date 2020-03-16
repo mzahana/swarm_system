@@ -16,14 +16,15 @@
 rm -rf /root/.ros/log
 
 export LED_GPIO=298
-echo $LED_GPIO >> /sys/class/gpio/export
+if [ ! -d "/sys/class/gpio/gpio$LED_GPIO" ]; then
+	echo $LED_GPIO >> /sys/class/gpio/export
+fi
 echo out >> /sys/class/gpio/gpio$LED_GPIO/direction
 echo 0 >> /sys/class/gpio/gpio$LED_GPIO/value
 
 
-cd /home/nvidia
 source /opt/ros/melodic/setup.bash
-source /home/nvidia/catkin_ws/devel/setup.bash
+source /home/aaal/catkin_ws/devel/setup.bash
 
 #ntpdate host01 &
 
@@ -63,4 +64,3 @@ roslaunch commander commander.launch drone_namespace:=$DRONE_ID
 
 
 exit 0
-
