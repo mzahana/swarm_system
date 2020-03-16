@@ -1,0 +1,12 @@
+topic_watchdog:
+  topic_list:
+    - "cam_f/infra1/image_rect_raw"
+    - "cam_odom/odom/sample"
+    - "mavros/imu/data_raw"
+    - "cam_thermal/image_raw"
+  command_list:
+    - "roslaunch hardware sensors.launch enable_camera_f:=true"
+    - "roslaunch hardware realsense_all_cameras.launch enable_cam_odom:=true"
+    - "roslaunch hardware realsense_all_cameras.launch enable_px4:=true"
+    - "roslaunch hardware realsense_all_cameras.launch enable_thermal_cam:=true"
+  watchdog_period: 15

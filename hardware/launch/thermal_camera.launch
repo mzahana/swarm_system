@@ -9,6 +9,6 @@
         <param name="image_width"       value="$(arg thermal_image_width)"/>
         <param name="image_height"      value="$(arg thermal_image_height)"/>
         <param name="pixel_format"      value="uyvy"/>
-        <param name="camera_frame_id"   value="$(arg drone_namespace)/thermal_cam"/>
+        <param name="camera_frame_id"   value="$(arg drone_namespace)/cam_thermal"/>
     </node>
 </launch>

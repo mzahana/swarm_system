@@ -56,11 +56,7 @@ sleep 5
 #!!!!roslaunch swarm_mapping realsense_cameras.launch &
 # export ROS_NAMESPACE=drone31
 
-roslaunch commander utils.launch drone_namespace:=$DRONE_ID
-roslaunch hardware sensors.launch drone_namespace:=$DRONE_ID serial_no_camera1:=$RS_ODOM_ID \
-                serial_no_camera2:=$RS_FRONT_ID serial_no_camera_r:=$RS_RIGHT_ID serial_no_camera_l:=$RS_LEFT_ID \
-                thermal_video_device:=$THERMAL_CAM
-roslaunch commander commander.launch drone_namespace:=$DRONE_ID
-
-
+roslaunch commander utils.launch drone_namespace:=$DRONE_ID &
+roslaunch hardware sensors.launch enable_realsense:=true enable_cam_odom:=true enable_camera_f:=true enable_camera_r:=true enable_camera_l:=true enable_px4:=true enable_cam_thermal:=true &
+roslaunch commander commander.launch drone_namespace:=$DRONE_ID &
 exit 0
