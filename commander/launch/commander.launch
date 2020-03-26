@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="drone_namespce" default=""/>
-    <group ns="$(arg drone_namespce)">
+    <arg name="drone_namespace" default=""/>
+    <group ns="$(arg drone_namespace)">
         <include file="$(find uav_commander)/launch/commander.launch">
-            <arg name="ns" value="$(arg drone_namespce)"/>
+            <arg name="ns" value="$(arg drone_namespace)"/>
         </include>
     </group>
 
