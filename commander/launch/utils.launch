@@ -25,7 +25,7 @@
         <node name="gui_service_servers" pkg="swarm_mapping" type="service_server.py"/>
         <node name="hostMasterDiscovery" pkg="master_discovery_fkie" type="master_discovery"/>
         <node name="hostMasterSync" pkg="master_sync_fkie" type="master_sync"/>
-        <node name="led_controller" pkg="swarm_controllers" type="led_controller"/>
+        <node name="led_controller" pkg="swarm_controllers" type="led_controller.py"/>
         <node name="topic_watchdog" pkg="swarm_controllers" type="topics_watchdog.py"/>
         <!-- <node name="" pkg="" type=""/> -->
     </group>
