@@ -11,6 +11,7 @@
     <arg name="enable_realsense"        default="false"/>
     <arg name="enable_cam_thermal"      default="false"/>
     <arg name="enable_px4"              default="false"/>
+    <arg name="enable_teraranger_bot"   default="false"/>
 
     <!-- ##### Thermal camera params ##### -->
     <arg name="thermal_video_device"    default=""/>    <!-- Thermal camera streaming file -->
@@ -44,9 +45,9 @@
     <arg name="depth_height_f"          default="480"/>
     <arg name="depth_fps_f"             default="30"/>
     <arg name="enable_depth_f"          default="true"/>
-    <arg name="infra_width_f"          default="640"/>
-    <arg name="infra_height_f"         default="480"/>
-    <arg name="infra_fps_f"            default="30"/>
+    <arg name="infra_width_f"           default="640"/>
+    <arg name="infra_height_f"          default="480"/>
+    <arg name="infra_fps_f"             default="30"/>
     <arg name="enable_infra1_f"         default="true"/>
     <arg name="enable_infra2_f"         default="true"/>
     <!-- ##### Side Realsense cameras params ##### -->
@@ -63,9 +64,9 @@
     <arg name="color_height_l_r"        default="360"/>
     <arg name="color_fps_l_r"           default="15"/>
     <arg name="enable_color_l_r"        default="false"/>
-    <arg name="infra_width_l_r"        default="640"/>
-    <arg name="infra_height_l_r"       default="360"/>
-    <arg name="infra_fps_l_r"          default="15"/>
+    <arg name="infra_width_l_r"         default="640"/>
+    <arg name="infra_height_l_r"        default="360"/>
+    <arg name="infra_fps_l_r"           default="15"/>
     <arg name="enable_infra1_l_r"       default="false"/>
     <arg name="enable_infra2_l_r"       default="false"/>
     <arg name="depth_width_l_r"         default="640"/>
@@ -74,6 +75,19 @@
     <arg name="enable_depth_l_r"        default="true"/>
     <arg name="enable_gyro_l_r"         default="false"/>
     <arg name="enable_accel_l_r"        default="false"/>
+
+    <!-- ##### Bottom teraranger params ##### -->
+    <arg name="tf_frame"                default="teraranger_bottom_frame"/>
+    <arg name="tf_parent"               default="base_link"/>
+    <arg name="tf_rate"                 default="10"/>
+    <arg name="tf_node_name"            default="static_tf_teraranger_bottom"/>
+    <arg name="tf_x_trans"              default="0"/>
+    <arg name="tf_y_trans"              default="1"/>
+    <arg name="tf_z_trans"              default="0"/>
+    <arg name="tf_roll_offset"          default="0"/>
+    <arg name="tf_pitch_offset"         default="0"/>
+    <arg name="tf_yaw_offset"           default="0"/>
+    <arg name="z_covariance"            default="0.01"/>
     
     <group ns="$(arg drone_namespace)">
         <!-- ###### Starts the realsense node ###### -->
@@ -148,14 +162,31 @@
             </include>
         </group>
 
-        <!-- ###### Starts the thermal cam nodes ###### -->
+        <!-- ###### Starts the thermal cam node ###### -->
         <group if="$(arg enable_cam_thermal)">
             <include file="$(find hardware)/launch/thermal_camera.launch">
                 <arg name="thermal_video_device"        value="$(arg thermal_video_device)"/>
                 <arg name="drone_namespace"             value="$(arg drone_namespace)"/>
-                <arg name="thermal_image_height"        value="$(thermal_image_height)"/>
-                <arg name="thermal_image_width"         value="$(thermal_image_width)"/>
+                <arg name="thermal_image_height"        value="$(arg thermal_image_height)"/>
+                <arg name="thermal_image_width"         value="$(arg thermal_image_width)"/>
             </include>
+        </group>
+        <!-- ###### Starts the bottom facing teraranger node ###### -->
+        <group if="$(arg enable_teraranger_bot)">
+            <node name="teraranger_bottom" pkg="swarm_sensors" type="teraranger_evo.py">
+                <param name="tf_frame"          value="$(arg tf_frame)"/>
+                <param name="tf_parent"         value="$(arg tf_frame)"/>
+                <param name="tf_rate"           value="$(arg tf_rate)"/>
+                <param name="node_name"         value="$(arg node_name)"/>
+                <param name="tf_x_trans"        value="$(arg tf_x_trans)"/>
+                <param name="tf_y_trans"        value="$(arg tf_y_trans)"/>
+                <param name="tf_z_trans"        value="$(arg tf_z_trans)"/>
+                <param name="tf_roll_offset"    value="$(arg tf_roll_offset)"/>
+                <param name="tf_pitch_offset"   value="$(arg tf_pitch_offset)"/>
+                <param name="tf_yaw_offset"     value="$(arg tf_yaw_offset)"/>
+                <param name="z_covariance"      value="$(arg z_covariance)"/>
+                <param name=""              value="$(arg )"/>
+            </node>
         </group>
     </group>
 
