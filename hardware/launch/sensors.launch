@@ -177,7 +177,7 @@
                 <param name="tf_frame"          value="$(arg tf_frame)"/>
                 <param name="tf_parent"         value="$(arg tf_frame)"/>
                 <param name="tf_rate"           value="$(arg tf_rate)"/>
-                <param name="node_name"         value="$(arg node_name)"/>
+                <param name="tf_node_name"      value="$(arg tf_node_name)"/>
                 <param name="tf_x_trans"        value="$(arg tf_x_trans)"/>
                 <param name="tf_y_trans"        value="$(arg tf_y_trans)"/>
                 <param name="tf_z_trans"        value="$(arg tf_z_trans)"/>
@@ -185,7 +185,6 @@
                 <param name="tf_pitch_offset"   value="$(arg tf_pitch_offset)"/>
                 <param name="tf_yaw_offset"     value="$(arg tf_yaw_offset)"/>
                 <param name="z_covariance"      value="$(arg z_covariance)"/>
-                <param name=""              value="$(arg )"/>
             </node>
         </group>
     </group>
