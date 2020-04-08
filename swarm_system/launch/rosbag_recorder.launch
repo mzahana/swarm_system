@@ -1,0 +1,24 @@
+<launch>
+    <!-- This launch files records topics that can be used for log analysis, or offline mapping, ...etc -->
+
+    <arg name="record_odom" default="false" /> <!--records odmo from t265 and its imu -->
+    <arg name="record_d435i_front" default="false" /> <!-- records color/depth/imu topic and their camera info-->
+
+    <!-- namespaces -->
+    <arg name="main_ns" default="drone1" />
+    <arg name="cam_odom_ns" default="t265" />
+    <arg name="cam_depth_front_ns" default="d435" />
+
+    <!-- topics names -->
+    <arg name="cam_odom_topics" default="/$(arg main_ns)/$(arg cam_odom_ns)/odom/sample /$(arg main_ns)/$(arg cam_odom_ns)/imu" />
+    <arg name="cam_depth_front_topics" default="/$(arg main_ns)/$(arg cam_depth_front_ns)/color/image_raw /$(arg main_ns)/$(arg cam_depth_front_ns)/color/camera_info /$(arg main_ns)/$(arg cam_depth_front_ns)/aligned_depth_to_color/image_raw /$(arg main_ns)/$(arg cam_depth_front_ns)/aligned_depth_to_color/camera_info /$(arg main_ns)/$(arg cam_depth_front_ns)/imu" />
+    <arg name="tf_topics" default="/tf /tf_static" />
+
+    <!-- output file name and path -->
+    <arg name="file" default="/home/aaal/handheld.bag" />
+    <arg name="max_size_MB" default="1024" />
+
+    <node name="swarm_bag_recorder" pkg="rosbag" type="record" args="-o $(arg file) --size=$(arg max_size_MB) $(arg cam_odom_topics) $(arg cam_depth_front_topics) $(arg tf_topics)" />
+
+
+</launch>
