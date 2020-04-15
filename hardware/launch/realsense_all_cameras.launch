@@ -30,6 +30,7 @@
     <arg name="initial_reset"           default="false"/>
     <arg name="enable_fisheye"          default="false"/>
 
+    <arg name="align_depth_f"           default="true" />
     <arg name="color_width_f"           default="640"/>
     <arg name="color_height_f"          default="480"/>
     <arg name="color_fps_f"             default="30"/>
@@ -38,27 +39,32 @@
     <arg name="depth_height_f"          default="480"/>
     <arg name="depth_fps_f"             default="30"/>
     <arg name="enable_depth_f"          default="true"/>
-    <arg name="infra_width_f"          default="640"/>
-    <arg name="infra_height_f"         default="480"/>
-    <arg name="infra_fps_f"            default="30"/>
+    <arg name="infra_width_f"           default="640"/>
+    <arg name="infra_height_f"          default="480"/>
+    <arg name="infra_fps_f"             default="30"/>
     <arg name="enable_infra1_f"         default="true"/>
     <arg name="enable_infra2_f"         default="true"/>
+    <arg name="enable_pointcloud_f"     default="false"/>
+    <arg name="filters_f"               default="" />
 
-    <arg name="color_width_l_r"        default="640"/>
-    <arg name="color_height_l_r"       default="360"/>
-    <arg name="color_fps_l_r"          default="15"/>
-    <arg name="enable_color_l_r"       default="false"/>
-    <arg name="infra_width_l_r"       default="640"/>
-    <arg name="infra_height_l_r"      default="360"/>
-    <arg name="infra_fps_l_r"         default="15"/>
-    <arg name="enable_infra1_l_r"      default="false"/>
-    <arg name="enable_infra2_l_r"      default="false"/>
-    <arg name="depth_width_l_r"        default="640"/>
-    <arg name="depth_height_l_r"       default="360"/>
-    <arg name="depth_fps_l_r"          default="6"/>
-    <arg name="enable_depth_l_r"       default="true"/>
-    <arg name="enable_gyro_l_r"        default="false"/>
-    <arg name="enable_accel_l_r"       default="false"/>
+    <arg name="align_depth_l_r"         default="true" />
+    <arg name="color_width_l_r"         default="640"/>
+    <arg name="color_height_l_r"        default="360"/>
+    <arg name="color_fps_l_r"           default="15"/>
+    <arg name="enable_color_l_r"        default="false"/>
+    <arg name="infra_width_l_r"         default="640"/>
+    <arg name="infra_height_l_r"        default="360"/>
+    <arg name="infra_fps_l_r"           default="15"/>
+    <arg name="enable_infra1_l_r"       default="false"/>
+    <arg name="enable_infra2_l_r"       default="false"/>
+    <arg name="depth_width_l_r"         default="640"/>
+    <arg name="depth_height_l_r"        default="360"/>
+    <arg name="depth_fps_l_r"           default="6"/>
+    <arg name="enable_depth_l_r"        default="true"/>
+    <arg name="enable_gyro_l_r"         default="false"/>
+    <arg name="enable_accel_l_r"        default="false"/>
+    <arg name="enable_pointcloud_l_r"   default="false"/>
+    <arg name="filters_l_r"             default="" />
 
     <arg name="topic_odom_in"           default="odom_in"/>
     <arg name="calib_odom_file"         default=""/>
@@ -90,8 +96,8 @@
                     <arg name="serial_no"             value="$(arg serial_no_camera_f)"/>
                     <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_f)"/>
                     <arg name="initial_reset"         value="$(arg initial_reset)"/>
-                    <arg name="align_depth"           value="true"/>
-                    <arg name="filters"               value="pointcloud"/>
+                    <arg name="align_depth"           value="$(arg align_depth_f)"/>
+                    <arg name="filters"               value="$(arg filters_f)"/>
                     <arg name="color_width"           value="$(arg color_width_f)"/>
                     <arg name="color_height"          value="$(arg color_height_f)"/>
                     <arg name="color_fps"             value="$(arg color_fps_f)"/> 
@@ -109,6 +115,7 @@
                     <arg name="unite_imu_method"      value="$(arg d435_imu_unite)"/>
                     <arg name="accel_fps"             value="$(arg accel_fps_d435)"/>
                     <arg name="gyro_fps"              value="$(arg gyro_fps_d435)"/>
+                    <arg name="enable_pointcloud"        value="$(arg enable_pointcloud_f)"/>
                 </include>
             </group>
         </group>
@@ -120,8 +127,8 @@
                     <arg name="serial_no"             value="$(arg serial_no_camera_r)"/>
                     <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_r)"/>
                     <arg name="initial_reset"         value="$(arg initial_reset)"/>
-                    <arg name="align_depth"           value="false"/>
-                    <arg name="filters"               value="pointcloud"/>
+                    <arg name="align_depth"           value="$(arg align_depth_l_r)"/>
+                    <arg name="filters"               value="$(arg filters_f)"/>
                     <arg name="color_width"           value="$(arg color_width_l_r)"/>
                     <arg name="color_height"          value="$(arg color_height_l_r)"/>
                     <arg name="color_fps"             value="$(arg color_fps_l_r)"/>
@@ -141,6 +148,7 @@
                     <arg name="enable_gyro"           value="$(arg enable_gyro_l_r)"/>
                     <arg name="accel_fps"             value="$(arg accel_fps_d435)"/>
                     <arg name="gyro_fps"              value="$(arg gyro_fps_d435)"/>
+                    <arg name="enable_pointcloud"        value="$(arg enable_pointcloud_l_r)"/>
                 </include>
             </group>
         </group>
@@ -152,8 +160,8 @@
                     <arg name="serial_no"             value="$(arg serial_no_camera_l)"/>
                     <arg name="tf_prefix"		      value="$(arg tf_prefix_camera_l)"/>
                     <arg name="initial_reset"         value="$(arg initial_reset)"/>
-                    <arg name="align_depth"           value="false"/>
-                    <arg name="filters"               value="pointcloud"/>
+                    <arg name="align_depth"           value="$(arg align_depth_l_r)"/>
+                    <arg name="filters"               value="$(arg filters_l_r)"/>
                     <arg name="color_width"           value="$(arg color_width_l_r)"/>
                     <arg name="color_height"          value="$(arg color_height_l_r)"/>
                     <arg name="color_fps"             value="$(arg color_fps_l_r)"/>
@@ -173,11 +181,14 @@
                     <arg name="enable_gyro"           value="$(arg enable_gyro_l_r)"/>
                     <arg name="accel_fps"             value="$(arg accel_fps_d435)"/>
                     <arg name="gyro_fps"              value="$(arg gyro_fps_d435)"/>
+                    <arg name="enable_pointcloud"        value="$(arg enable_pointcloud_l_r)"/>
                 </include>
             </group>
         </group>
 
-        <node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0 0 0 0 0 0 /$(arg tf_prefix_cam_odom)_link /$(arg tf_prefix_camera_f)_link 100"/>
+        <node pkg="tf" type="static_transform_publisher" name="t265_to_d435_f" args="0 0 0 0 0 0 /$(arg tf_prefix_cam_odom)_link /$(arg tf_prefix_camera_f)_link 100"/>
+        <node pkg="tf" type="static_transform_publisher" name="t265_to_d435_l" args="0 0 0 0 0 0 /$(arg tf_prefix_cam_odom)_link /$(arg tf_prefix_camera_l)_link 100"/>
+        <node pkg="tf" type="static_transform_publisher" name="t265_to_d435_r" args="0 0 0 0 0 0 /$(arg tf_prefix_cam_odom)_link /$(arg tf_prefix_camera_r)_link 100"/>
 
 </launch>
 

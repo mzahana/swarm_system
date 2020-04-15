@@ -36,6 +36,8 @@
     <arg name="device_type_camera_f"    default="d4.5"/>
     <arg name="camera_f"              	default="cam1"/>		<!-- Note: Replace with camera name -->
     <arg name="tf_prefix_camera_f"      default="$(arg drone_namespace)/$(arg camera_f)"/>
+    <arg name="enable_pointcloud_f"     default="false" />
+    <arg name="align_depth_f"           default="true" />
 
     <arg name="color_width_f"           default="640"/>
     <arg name="color_height_f"          default="480"/>
@@ -48,8 +50,8 @@
     <arg name="infra_width_f"           default="640"/>
     <arg name="infra_height_f"          default="480"/>
     <arg name="infra_fps_f"             default="30"/>
-    <arg name="enable_infra1_f"         default="true"/>
-    <arg name="enable_infra2_f"         default="true"/>
+    <arg name="enable_infra1_f"         default="false"/>
+    <arg name="enable_infra2_f"         default="false"/>
     <!-- ##### Side Realsense cameras params ##### -->
     <arg name="serial_no_camera_l"      default=""/>
     <arg name="serial_no_camera_r"      default=""/>
@@ -64,6 +66,7 @@
     <arg name="color_height_l_r"        default="360"/>
     <arg name="color_fps_l_r"           default="15"/>
     <arg name="enable_color_l_r"        default="false"/>
+    <arg name="enable_pointcloud_l_r"   default="false" />
     <arg name="infra_width_l_r"         default="640"/>
     <arg name="infra_height_l_r"        default="360"/>
     <arg name="infra_fps_l_r"           default="15"/>
@@ -173,9 +176,9 @@
         </group>
         <!-- ###### Starts the bottom facing teraranger node ###### -->
         <group if="$(arg enable_teraranger_bot)">
-            <node name="teraranger_bottom" pkg="swarm_sensors" type="teraranger_evo.py">
+            <node name="teraranger_bottom" pkg="swarm_sensors" type="teraranger_evo.py" output="screen" >
                 <param name="tf_frame"          value="$(arg tf_frame)"/>
-                <param name="tf_parent"         value="$(arg tf_frame)"/>
+                <param name="tf_parent"         value="$(arg tf_parent)"/>
                 <param name="tf_rate"           value="$(arg tf_rate)"/>
                 <param name="tf_node_name"      value="$(arg tf_node_name)"/>
                 <param name="tf_x_trans"        value="$(arg tf_x_trans)"/>
