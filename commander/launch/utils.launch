@@ -3,11 +3,11 @@
 
     <arg name="drone_namespace"                     default="dronexx"/>
     
-    <arg name="odom_cam_to_drone_center_trans_x"   default="-0.114"/>
-    <arg name="odom_cam_to_drone_center_trans_y"   default="0.005"/>
+    <arg name="odom_cam_to_drone_center_trans_x"   default="-0.086"/>
+    <arg name="odom_cam_to_drone_center_trans_y"   default="0.000"/>
     <arg name="odom_cam_to_drone_center_trans_z"   default="0.035"/>
     <arg name="odom_cam_to_drone_center_rot_yaw"   default="0"/>
-    <arg name="odom_cam_to_drone_center_rot_pit"   default="-0.314159"/>
+    <arg name="odom_cam_to_drone_center_rot_pit"   default="-0.436"/>
     <arg name="odom_cam_to_drone_center_rot_rol"   default="0"/>
 
     <arg name="mavros_ned_rot"                      default="1.57"/>
@@ -16,7 +16,7 @@
 
         <rosparam command="load" file="$(find swarm_system)/config/swarm_params.yaml" />
 
-        <node name="cam_odom_correction_tf" pkg="tf" type="static_transform_publisher" args="$(arg odom_cam_to_drone_center_trans_x) $(arg odom_cam_to_drone_center_trans_y) $(arg odom_cam_to_drone_center_trans_z) $(arg odom_cam_to_drone_center_rot_yaw) $(arg odom_cam_to_drone_center_rot_pit) $(arg odom_cam_to_drone_center_rot_rol) $(arg drone_namespace)/cam_odom_corr $(arg drone_namespace)/cam_odom_odom_frame 10"/>
+        <node name="cam_odom_correction_tf" pkg="tf" type="static_transform_publisher" args="$(arg odom_cam_to_drone_center_trans_x) $(arg odom_cam_to_drone_center_trans_y) $(arg odom_cam_to_drone_center_trans_z) $(arg odom_cam_to_drone_center_rot_yaw) $(arg odom_cam_to_drone_center_rot_pit) $(arg odom_cam_to_drone_center_rot_rol) $(arg drone_namespace)/cam_odom_link $(arg drone_namespace)/base_link 10"/>
         <node name="mavros_temp_tf"         pkg="tf" type="static_transform_publisher" args="0 0 0 -$(arg mavros_ned_rot) 0 0 $(arg drone_namespace)/cam_odom_odom_frame $(arg drone_namespace)/cam_odom_mavros_temp_frame 10"/>
         <node name="mavros_viz_tf"          pkg="tf" type="static_transform_publisher" args="0 0 0 $(arg mavros_ned_rot) 0 0 $(arg drone_namespace)/cam_odom_mavros_temp_frame $(arg drone_namespace)/cam_odom_mavros_frame 10"/>
         <!-- <node name="" pkg="tf" type="static_transform_publisher" args=""/> -->

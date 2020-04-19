@@ -2,9 +2,13 @@
 <launch>
     <arg name="drone_namespace" default=""/>
     <group ns="$(arg drone_namespace)">
-        <include file="$(find uav_commander)/launch/commander.launch">
-            <arg name="ns" value="$(arg drone_namespace)"/>
-        </include>
+        <rosparam command="load" file="$(find swarm_system)/config/swarm_params.yaml" />
+        <node pkg="uav_commander" type="uav_commander" name="uav_commander" output="screen"/>
+        <node name="trajectory_sampler" pkg="mav_trajectory_generation_ros" type="trajectory_sampler_node" output="screen" /> 
+        <node name="cam_to_body_transform" pkg="uav_commander" type="vel_rotation.py" />
+            <!--include file="$(find uav_commander)/launch/commander.launch">
+                <arg name="ns" value="$(arg drone_namespace)"/>
+            </include-->
     </group>
 
 </launch>
