@@ -1,12 +1,41 @@
+indicator_led_pin: 298
 topic_watchdog:
   topic_list:
-    - "cam_f/infra1/image_rect_raw"
-    - "cam_odom/odom/sample"
     - "mavros/imu/data_raw"
-    - "cam_thermal/image_raw"
+    - "cam_odom/odom/sample"
+    - "mavros/setpoint_raw/attitude"
   command_list:
-    - "roslaunch hardware sensors.launch enable_camera_f:=true"
-    - "roslaunch hardware realsense_all_cameras.launch enable_cam_odom:=true"
-    - "roslaunch hardware realsense_all_cameras.launch enable_px4:=true"
-    - "roslaunch hardware realsense_all_cameras.launch enable_thermal_cam:=true"
+    - "ls"
+    - "ls"
+    - "ls"
   watchdog_period: 15
+
+uav_commander:
+  ctrl_mode: 2
+  enable_sim: false
+  enable_gazebo_state: false
+  #Controller parameters
+  max_acc: 2.0
+  attctrl_constant: 0.3
+  normalizedthrust_constant: 0.068
+  Kp_x: 6.0
+  Kp_y: 6.0
+  Kp_z: 20.0
+  Kv_x: 3.0
+  Kv_y: 3.0
+  Kv_z: 6.0
+  yaw_heading: 0.0
+  frame_id: drone32/base_link_swarm
+  vel_topic: "/mavros/local_position/velocity_local"
+  reference_acceleration: 3.0
+  reference_speed: 4.5
+  enable_gazebo_state: false
+  enable_sim: false
+  coordinate_type: 'enu'
+  path_mode: 'polynomial'
+  intermediate_poses: true
+  intermediate_pose_separation: 1.0
+  takeoff_height: 1.0
+  landing_height: -0.5
+  heading_mode: 'auto'
+  controller_frequency: 100
