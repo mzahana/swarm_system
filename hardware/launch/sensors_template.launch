@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="drone_namespace"         default=""/>    <!-- Main drone namespace -->
+    <arg name="drone_namespace"         default="dronexx"/>    <!-- Main drone namespace -->
 
     <!-- ##### Enable nodes ##### -->
     <arg name="enable_cam_odom"         default="false"/>    <!-- Set to true to use all 4 cameras; else only front 2 cameras are used -->
@@ -12,6 +12,7 @@
     <arg name="enable_cam_thermal"      default="false"/>
     <arg name="enable_px4"              default="false"/>
     <arg name="enable_teraranger_bot"   default="false"/>
+    <arg name="enable_camera_rgb"       default="false"/>
 
     <!-- ##### Thermal camera params ##### -->
     <arg name="thermal_video_device"    default=""/>    <!-- Thermal camera streaming file -->
@@ -91,7 +92,14 @@
     <arg name="tf_pitch_offset"         default="0"/>
     <arg name="tf_yaw_offset"           default="0"/>
     <arg name="z_covariance"            default="0.01"/>
-    
+
+    <!-- ##### RGB camera params ##### -->
+    <arg name="rgb_cam_width"           default="1920"/>
+    <arg name="rgb_cam_height"          default="1080"/>
+    <arg name="rgb_cam_fps"             default="60"/>
+    <arg name="rgb_cam_name"            default="cam_color"/>
+    <arg name="rgb_cam_id"              default="0"/>
+
     <group ns="$(arg drone_namespace)">
         <!-- ###### Starts the realsense node ###### -->
         <group if="$(arg enable_realsense)">
@@ -110,9 +118,9 @@
                 <arg name="color_height_f"          value="$(arg color_height_f)"/>
                 <arg name="color_fps_f"             value="$(arg color_fps_f)"/> 
                 <arg name="enable_color_f"          value="$(arg enable_color_f)"/>
-                <arg name="infra_width_f"          value="$(arg infra_width_f)"/>
-                <arg name="infra_height_f"         value="$(arg infra_height_f)"/>
-                <arg name="infra_fps_f"            value="$(arg infra_fps_f)"/>
+                <arg name="infra_width_f"           value="$(arg infra_width_f)"/>
+                <arg name="infra_height_f"          value="$(arg infra_height_f)"/>
+                <arg name="infra_fps_f"             value="$(arg infra_fps_f)"/>
                 <arg name="enable_infra1_f"         value="$(arg enable_infra1_f)"/>
                 <arg name="enable_infra2_f"         value="$(arg enable_infra2_f)"/>
                 <arg name="depth_width_f"           value="$(arg depth_width_f)"/>
@@ -127,9 +135,9 @@
                 <arg name="color_height_l_r"        value="$(arg color_height_l_r)"/>
                 <arg name="color_fps_l_r"           value="$(arg color_fps_l_r)"/>
                 <arg name="enable_color_l_r"        value="$(arg enable_color_l_r)"/>
-                <arg name="infra_width_l_r"        value="$(arg infra_width_l_r)"/>
-                <arg name="infra_height_l_r"       value="$(arg infra_height_l_r)"/>
-                <arg name="infra_fps_l_r"          value="$(arg infra_fps_l_r)"/>
+                <arg name="infra_width_l_r"         value="$(arg infra_width_l_r)"/>
+                <arg name="infra_height_l_r"        value="$(arg infra_height_l_r)"/>
+                <arg name="infra_fps_l_r"           value="$(arg infra_fps_l_r)"/>
                 <arg name="enable_infra1_l_r"       value="$(arg enable_infra1_l_r)"/>
                 <arg name="enable_infra2_l_r"       value="$(arg enable_infra2_l_r)"/>
                 <arg name="depth_width_l_r"         value="$(arg depth_width_l_r)"/>
@@ -188,6 +196,17 @@
                 <param name="tf_pitch_offset"   value="$(arg tf_pitch_offset)"/>
                 <param name="tf_yaw_offset"     value="$(arg tf_yaw_offset)"/>
                 <param name="z_covariance"      value="$(arg z_covariance)"/>
+            </node>
+        </group>
+
+        <!-- ###### Starts the front facing RGB camera node ###### -->
+        <group if="$(arg enable_camera_rgb)">
+            <node name="$(arg rgb_cam_name)_node" type="mipi_cam_node" pkg="swarm_sensors">
+                <param name="width"             value="$(arg rgb_cam_width)"/>
+                <param name="height"            value="$(arg rgb_cam_height)"/>
+                <param name="fps"               value="$(arg rgb_cam_fps)"/>
+                <param name="id"                value="$(arg rgb_cam_id)"/>
+                <param name="cam_name"          value="$(arg rgb_cam_name)"/>
             </node>
         </group>
     </group>

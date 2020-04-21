@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="drone_namespace"         default=""/>    <!-- Main drone namespace -->
+    <arg name="drone_namespace"         default="drone32"/>    <!-- Main drone namespace -->
 
     <!-- ##### Enable nodes ##### -->
     <arg name="enable_cam_odom"         default="false"/>    <!-- Set to true to use all 4 cameras; else only front 2 cameras are used -->
@@ -12,6 +12,7 @@
     <arg name="enable_cam_thermal"      default="false"/>
     <arg name="enable_px4"              default="false"/>
     <arg name="enable_teraranger_bot"   default="false"/>
+    <arg name="enable_camera_rgb"       default="false"/>
 
     <!-- ##### Thermal camera params ##### -->
     <arg name="thermal_video_device"    default=""/>    <!-- Thermal camera streaming file -->
@@ -23,7 +24,7 @@
     <arg name="clip_distance"           default="-2"/>
     
     <!-- ##### Odom Realsense camera params ##### -->
-    <arg name="serial_no_cam_odom"      default=""/>
+    <arg name="serial_no_cam_odom"      default="0000908412110632"/>
     <arg name="device_type_cam_odom"    default="t265"/>
     <arg name="t265_imu_unite"          default="copy"/>
     <arg name="cam_odom"              	default="cam_odom"/>		<!-- Note: Replace with camera name -->
@@ -91,6 +92,14 @@
     <arg name="tf_pitch_offset"         default="0"/>
     <arg name="tf_yaw_offset"           default="0"/>
     <arg name="z_covariance"            default="0.01"/>
+
+     <!-- ##### RGB camera params ##### -->
+    <arg name="rgb_cam_width"           default="1920"/>
+    <arg name="rgb_cam_height"          default="1080"/>
+    <arg name="rgb_cam_fps"             default="60"/>
+    <arg name="rgb_cam_name"            default="cam_color"/>
+    <arg name="rgb_cam_id"              default="0"/>
+
     
     <group ns="$(arg drone_namespace)">
         <!-- ###### Starts the realsense node ###### -->
@@ -190,6 +199,18 @@
                 <param name="z_covariance"      value="$(arg z_covariance)"/>
             </node>
         </group>
+         
+         <!-- ###### Starts the front facing RGB camera node ###### -->
+        <group if="$(arg enable_camera_rgb)">
+            <node name="$(arg rgb_cam_name)_node" type="mipi_cam_node" pkg="swarm_sensors">
+                <param name="width"             value="$(arg rgb_cam_width)"/>
+                <param name="height"            value="$(arg rgb_cam_height)"/>
+                <param name="fps"               value="$(arg rgb_cam_fps)"/>
+                <param name="id"                value="$(arg rgb_cam_id)"/>
+                <param name="cam_name"          value="$(arg rgb_cam_name)"/>
+            </node>
+        </group>
+
     </group>
 
 </launch>
