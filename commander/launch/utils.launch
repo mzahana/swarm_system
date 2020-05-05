@@ -3,20 +3,27 @@
 
     <arg name="drone_namespace"                     default="dronexx"/>
     
-    <arg name="odom_cam_to_drone_center_trans_x"   default="-0.086"/>
+    <arg name="odom_cam_to_drone_center_trans_x"   default="-0.126"/>
     <arg name="odom_cam_to_drone_center_trans_y"   default="0.000"/>
     <arg name="odom_cam_to_drone_center_trans_z"   default="0.035"/>
     <arg name="odom_cam_to_drone_center_rot_yaw"   default="0"/>
     <arg name="odom_cam_to_drone_center_rot_pit"   default="-0.436"/>
     <arg name="odom_cam_to_drone_center_rot_rol"   default="0"/>
 
+    <arg name="base_link_to_px4_imu_trans_x"   default="-0.046"/>
+    <arg name="base_link_to_px4_imu_trans_y"   default="0.00"/>
+    <arg name="base_link_to_px4_imu_trans_z"   default="-0.03"/>
+    <arg name="base_link_to_px4_imu_rot_yaw"   default="0.0"/>
+    <arg name="base_link_to_px4_imu_rot_pit"   default="0.0"/>
+    <arg name="base_link_to_px4_imu_rot_rol"   default="0.0"/>
+
     <arg name="mavros_ned_rot"                      default="1.57"/>
 
     <group ns="$(arg drone_namespace)">
 
         <rosparam command="load" file="$(find swarm_system)/config/swarm_params.yaml" />
-
-        <node name="cam_odom_correction_tf" pkg="tf" type="static_transform_publisher" args="$(arg odom_cam_to_drone_center_trans_x) $(arg odom_cam_to_drone_center_trans_y) $(arg odom_cam_to_drone_center_trans_z) $(arg odom_cam_to_drone_center_rot_yaw) $(arg odom_cam_to_drone_center_rot_pit) $(arg odom_cam_to_drone_center_rot_rol) $(arg drone_namespace)/cam_odom_link $(arg drone_namespace)/base_link 10"/>
+        <node name="base_link_px4_imu"      pkg="tf" type="static_transform_publisher" args="$(arg base_link_to_px4_imu_trans_x) $(arg base_link_to_px4_imu_trans_y) $(arg base_link_to_px4_imu_trans_z) $(arg base_link_to_px4_imu_rot_yaw) $(arg base_link_to_px4_imu_rot_pit) $(arg base_link_to_px4_imu_rot_rol) $(arg drone_namespace)/base_link $(arg drone_namespace)/px4_imu_link 10"/>    
+        <node name="cam_odom_base_link"     pkg="tf" type="static_transform_publisher" args="$(arg odom_cam_to_drone_center_trans_x) $(arg odom_cam_to_drone_center_trans_y) $(arg odom_cam_to_drone_center_trans_z) $(arg odom_cam_to_drone_center_rot_yaw) $(arg odom_cam_to_drone_center_rot_pit) $(arg odom_cam_to_drone_center_rot_rol) $(arg drone_namespace)/cam_odom_link $(arg drone_namespace)/base_link 10"/>
         <node name="mavros_temp_tf"         pkg="tf" type="static_transform_publisher" args="0 0 0 -$(arg mavros_ned_rot) 0 0 $(arg drone_namespace)/cam_odom_odom_frame $(arg drone_namespace)/cam_odom_mavros_temp_frame 10"/>
         <node name="mavros_viz_tf"          pkg="tf" type="static_transform_publisher" args="0 0 0 $(arg mavros_ned_rot) 0 0 $(arg drone_namespace)/cam_odom_mavros_temp_frame $(arg drone_namespace)/cam_odom_mavros_frame 10"/>
         <!-- <node name="" pkg="tf" type="static_transform_publisher" args=""/> -->
